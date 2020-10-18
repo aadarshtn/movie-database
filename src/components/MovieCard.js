@@ -2,11 +2,11 @@ import React from 'react';
 
 class MovieCard extends React.Component {
     render () {
-        const {movies} = this.props;    
+        const {movies} = this.props;
         return (
             <div className="movie-card">
                 <div className="left">
-                    <img src={movies.Poster}></img>
+                    <img src={movies.Poster} alt="movie-poster"></img>
                 </div>
                 <div className="right">
                     <div className="title">{movies.Title}</div>
