@@ -1,12 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 
 import './index.css';
 import App from './components/App';
-import movies from './reducers';
+import rootReducer from './reducers';
 
-const store = createStore(movies);
+// curried form of function logger(obj, next, action)
+// The Form Of Curried Fn Will Be : function logger(obj)(next)(action)
+// const logger = function({ dispatch, getState }) {
+//   return function (next) {
+//     return function (action) {
+//       // Middleware Code
+//       console.log("ACTION_TYPE = ", action.type);
+//       next(action);
+//     }
+//   }
+// }
+
+// Another form of curried middleware fn using arrow syntax
+const logger = ({ dispatch, setState }) => (next) => (action) => {
+  // Middleware Code
+  console.log("ACTION_TYPE = ", action.type);
+  next(action);
+}
+
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log('store: ', store);
 // console.log('BEFORE STATE', store.getState());
 
