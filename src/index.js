@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './components/App';
@@ -21,11 +22,19 @@ import rootReducer from './reducers';
 // Another form of curried middleware fn using arrow syntax
 const logger = ({ dispatch, setState }) => (next) => (action) => {
   // Middleware Code
-  console.log("ACTION_TYPE = ", action.type);
+  // console.log("ACTION_TYPE = ", action.type);
   next(action);
 }
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+// const thunk = ({ dispatch, setState }) => (next) => (action) => {
+//   if (typeof(action) === 'function'){
+//     action(dispatch);
+//     return;
+//   }
+//   next(action);
+// }
+
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 console.log('store: ', store);
 // console.log('BEFORE STATE', store.getState());
 
